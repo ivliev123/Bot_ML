@@ -27,7 +27,7 @@ def recognition(img_path):
     test_array.append(data)
     test_array = np.array(test_array)
 
-    new_model = tf.keras.models.load_model('/home/ivliev/Bot_ML/test9.model')
+    new_model = tf.keras.models.load_model('/home/ivliev/Bot_ML/test11.model')
     # new_model = tf.keras.models.load_model('test.model')
 
     # x1 = time.time()

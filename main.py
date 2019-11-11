@@ -3,6 +3,8 @@ import telepot
 import time
 from telepot.loop import MessageLoop
 import urllib3
+import pickle
+import numpy as np
 
 import test_model
 
@@ -14,6 +16,8 @@ flag = None
 token='921261036:AAEc45igFmQDo2BtHp_lpk9jBmLq_vDhy00'
 
 
+with open('label_class.pickle', 'rb') as f:
+    label_class = pickle.load(f)
 
 
 def logWrite(n):
@@ -28,6 +32,7 @@ def logWrite(n):
     file.close()
 
 def handle(msg):
+    global label_class
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(content_type, chat_type, chat_id)
 
@@ -42,8 +47,13 @@ def handle(msg):
         bot.sendMessage(chat_id, "Обрабатываю")
         time.sleep(3)
         result = test_model.recognition("file.png")
+
+        label_class = np.array(label_class)
+        label = label_class[:,0]
+        label = list(label)
+        i_nn = label.index(str(result))
         # if flag == 0:
-        bot.sendMessage(chat_id, str(result))
+        bot.sendMessage(chat_id, str(label_class[i_nn][1]))
 
     # if content_type == 'document':
     #     # print()

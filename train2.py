@@ -13,8 +13,14 @@ import os
 with open('train.pickle', 'rb') as f:
     data = pickle.load(f)
 
+with open('label_class.pickle', 'rb') as f:
+    label_class = pickle.load(f)
+
 data = np.array(data)
 print(data.shape)
+
+label_class = np.array(label_class)
+print(label_class.shape[0])
 
 
 x_train = []
@@ -55,7 +61,7 @@ model.add(Dense(1024, activation=tf.nn.relu))
 model.add(Dense(512, activation=tf.nn.relu))
 model.add(Dense(256, activation=tf.nn.relu))
 model.add(Dropout(0.2))
-model.add(Dense(len(y_train),activation = tf.nn.softmax))
+model.add(Dense(label_class.shape[0],activation = tf.nn.softmax))
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
