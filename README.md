@@ -37,8 +37,8 @@ _________________________________________________________________
 ```
 python main.py
 ```
-Ссылка на бота
-[a link](https://t.me/ML_123_bot)
-https://t.me/ML_123_bot
+
+[Bot Machine Learning](https://t.me/ML_123_bot)
+
 Пример работы бота
-![Label Tool](ros2/20.png)
+![Label Tool](bot_test.jpg)
