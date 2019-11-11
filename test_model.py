@@ -1,5 +1,4 @@
 import tensorflow as tf
-import matplotlib.pyplot as plt
 import numpy as np
 import time
 import cv2
@@ -11,10 +10,10 @@ import sys
 with open('label_class.pickle', 'rb') as f:
     label_class = pickle.load(f)
 
-with open('test.pickle', 'rb') as f:
-    test = pickle.load(f)
-
-new_model = tf.keras.models.load_model('test9.model')
+# with open('test.pickle', 'rb') as f:
+#     test = pickle.load(f)
+#
+# new_model = tf.keras.models.load_model('test9.model')
 
 def recognition(img_path):
     # img_path = '/home/ivliev/test_tensorflow/Machine_Learning/images/3021.png'
@@ -28,7 +27,7 @@ def recognition(img_path):
     test_array.append(data)
     test_array = np.array(test_array)
 
-    # new_model = tf.keras.models.load_model('test9.model')
+    new_model = tf.keras.models.load_model('/home/ivliev/Bot_ML/test9.model')
     # new_model = tf.keras.models.load_model('test.model')
 
     # x1 = time.time()

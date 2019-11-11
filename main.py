@@ -7,8 +7,7 @@ import urllib3
 import test_model
 
 global token
-global result
-global flag
+
 
 flag = None
 
@@ -41,6 +40,7 @@ def handle(msg):
         bot.download_file(msg['photo'][0]['file_id'], 'file.png')
         # flaf = 1
         bot.sendMessage(chat_id, "Обрабатываю")
+        time.sleep(3)
         result = test_model.recognition("file.png")
         # if flag == 0:
         bot.sendMessage(chat_id, str(result))
@@ -87,7 +87,7 @@ while True:
     try:
         bot.getMe()
         print (bot.getMe())
-        print (bot.getUpdates())
+        # print (bot.getUpdates())
 
     except:
         print('Ошибка. Перезапуск proxy.')
