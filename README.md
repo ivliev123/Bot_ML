@@ -35,7 +35,7 @@ _________________________________________________________________
 
 ## Запуск бота
 ```
-python main.py
+python3 main.py --token 'your_token'
 ```
 ## Cсылка
 [Bot Machine Learning](https://t.me/ML_123_bot)

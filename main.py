@@ -10,13 +10,29 @@ import test_model
 
 global token
 
+import argparse
+
+
+
+
+
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-t", "--token", default='',
+	help="token of telegram bot")
+
+args = vars(ap.parse_args())
+
+
+print(args["token"])
+
 
 flag = None
 
-token='921261036:AAEc45igFmQDo2BtHp_lpk9jBmLq_vDhy00'
+token=args["token"]
 
 
-with open('label_class.pickle', 'rb') as f:
+with open('/home/ivliev/Bot_ML/label_class.pickle', 'rb') as f:
     label_class = pickle.load(f)
 
 
@@ -36,29 +52,32 @@ def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(content_type, chat_type, chat_id)
 
-    if content_type == 'text':
-        bot.sendMessage(chat_id, "You said '{}'".format(msg["text"]))
+    # if content_type == 'text':
+    #     bot.sendMessage(chat_id, "You said '{}'".format(msg["text"]))
 
     if content_type == 'photo':
         print(msg["photo"])
-        # bot.sendMessage(chat_id, "You said '{}'".format(msg["photo"]))
-        bot.download_file(msg['photo'][0]['file_id'], 'file.png')
-        # flaf = 1
+        file_name_ ='_' + str(chat_id) + "file.png"
+        bot.download_file(msg['photo'][0]['file_id'], file_name_)
+
         bot.sendMessage(chat_id, "Обрабатываю")
         time.sleep(3)
-        result = test_model.recognition("file.png")
+        # result = test_model.recognition("file.png")
+        #
+        # label_class = np.array(label_class)
+        # label = label_class[:,0]
+        # label = list(label)
+        # i_nn = label.index(str(result))
 
-        label_class = np.array(label_class)
-        label = label_class[:,0]
-        label = list(label)
-        i_nn = label.index(str(result))
-        # if flag == 0:
-        bot.sendMessage(chat_id, str(label_class[i_nn][1]))
+        result = test_model.predictions_out(file_name_, label_class)
+        str_out = ''
+        for i in range(len(result)):
+            str_out += str(result[i][0]) + ' - ' + str(round(result[i][1],2)) + '%; '
 
-    # if content_type == 'document':
-    #     # print()
-    #     print(msg["document"])
-    #     bot.download_file(msg['document'][0]['message']['document']['thumb']['file_id'], 'file.png')
+
+        bot.sendMessage(chat_id, str_out)
+        # bot.sendMessage(chat_id, str(label_class[i_nn][1]))
+
 
 
 
