@@ -50,15 +50,19 @@ model = Sequential()
 
 model.add(Conv2D(128, kernel_size=(7,7), input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(256, kernel_size=(3,3), input_shape=input_shape))
+model.add(Conv2D(256, kernel_size=(5,5)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-# model.add(Conv2D(128, kernel_size=(3,3), input_shape=input_shape))
+model.add(Conv2D(128, kernel_size=(3,3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(64, kernel_size=(3,3)))
+
+# model.add(Conv2D(64, kernel_size=(3,3)))
 # model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())
 
-# model.add(Dense(1024, activation=tf.nn.relu))
-# model.add(Dense(512, activation=tf.nn.relu))
+model.add(Dense(512, activation=tf.nn.relu))
+model.add(Dense(512, activation=tf.nn.relu))
 model.add(Dense(128, activation=tf.nn.relu))
 model.add(Dropout(0.2))
 model.add(Dense(label_class.shape[0],activation = tf.nn.softmax))
@@ -76,8 +80,8 @@ cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
 
 model.save_weights(checkpoint_path.format(epoch=0))
 
-model.fit(x_train, y_train, batch_size=500, epochs=30, callbacks=[cp_callback])
+model.fit(x_train, y_train, batch_size=500, epochs=100, callbacks=[cp_callback])
 
 
 
-model.save('test12.model')
+model.save('test15.model')
