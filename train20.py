@@ -17,10 +17,10 @@ with open('label_class.pickle', 'rb') as f:
     label_class = pickle.load(f)
 
 data = np.array(data)
-print(data.shape)
+# print(data.shape)
 
 label_class = np.array(label_class)
-print(label_class.shape[0])
+# print(label_class.shape[0])
 
 
 x_train = []
@@ -36,13 +36,13 @@ y_train.astype(np.uint8)
 x_train = np.array(x_train)
 
 
-print(len(x_train))
-print(len(y_train))
+# print(len(x_train))
+# print(len(y_train))
 
 
 # input_shape = (50, 50, 3)
 input_shape=x_train.shape[1:]
-print(input_shape)
+# print(input_shape)
 
 x_train = tf.keras.utils.normalize(x_train, axis = 1)
 
@@ -61,7 +61,8 @@ model.add(Flatten())
 # model.add(Dense(512, activation=tf.nn.relu))
 model.add(Dense(128, activation=tf.nn.relu))
 model.add(Dropout(0.2))
-model.add(Dense(label_class.shape[0],activation = tf.nn.softmax))
+# model.add(Dense(label_class.shape[0],activation = tf.nn.softmax))
+model.add(Dense(4,activation = tf.nn.softmax))
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
@@ -76,7 +77,9 @@ cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
 
 model.save_weights(checkpoint_path.format(epoch=0))
 
-model.fit(x_train, y_train, batch_size=500, epochs=100, callbacks=[cp_callback])
+model.summary()
+# model.fit(x_train, y_train, batch_size=500, epochs=100, callbacks=[cp_callback])
+model.fit(x_train, y_train, batch_size=500, epochs=2, callbacks=[cp_callback])
 
 
 
